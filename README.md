@@ -84,9 +84,9 @@ Method: POST
 
 요청 (Request Body):
 {
-  "name": "test",
-  "email": "test@example.com",
-  "password": "test1234"
+  "name": "홍길동",
+  "email": "hong@example.com",
+  "password": "password123"
 }
 
 정상 응답 (200 OK):
@@ -94,9 +94,8 @@ Method: POST
   "success": true,
   "message": "유저 회원가입이 완료되었습니다.",
   "user": {
-    "id": "682b79db38765ca2e9490748"
-    "name": "test",
-    "email": "test@example.com",
+    "name": "홍길동",
+    "email": "hong@example.com",
     "role": "USER"
   }
 }
@@ -111,19 +110,19 @@ Method: POST
 
 요청 (Request Body):
 {
-  "email": string,     // 필수
-  "password": string   // 필수
+  "email": "hong@example.com",
+  "password": "password123"
 }
 
 정상 응답 (200 OK):
 {
   "success": true,
   "message": "유저 로그인이 완료되었습니다.",
-  "accessToken": "accessToken",
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
-    "id": "682b79db38765ca2e9490748"
-    "name": "test",
-    "email": "test@example.com",
+    "id": "682b79db38765ca2e9490748",
+    "name": "홍길동",
+    "email": "hong@example.com",
     "role": "USER"
   }
 }
@@ -138,24 +137,30 @@ Method: GET
 
 요청 (Request Body):
 {
-  "name": string,    // 선택
-  "email": string,   // 선택
-  "role": string     // 선택
+  "name": "홍",
+  "email": "hong",
+  "role": "USER"
 }
 
 정상 응답 (200 OK):
 {
   "success": true,
-  "message": string,
+  "message": "유저 목록이 조회되었습니다.",
   "users": [
     {
-      "id": string,
-      "name": string,
-      "email": string,
-      "role": string
+      "id": "682b79db38765ca2e9490748",
+      "name": "홍길동",
+      "email": "hong@example.com",
+      "role": "USER"
+    },
+    {
+      "id": "682b79db38765ca2e9490749",
+      "name": "홍순이",
+      "email": "hong2@example.com",
+      "role": "USER"
     }
   ],
-  "total": number
+  "total": 2
 }
 ```
 
@@ -168,14 +173,14 @@ Method: PUT
 
 요청 (Request Body):
 {
-  "role": string  // 필수
+  "role": "OPERATOR"
 }
 
 정상 응답 (200 OK):
 {
   "success": true,
   "message": "유저 권한 변경이 완료되었습니다.",
-  "role": string
+  "role": "OPERATOR"
 }
 ```
 
@@ -190,22 +195,28 @@ Method: POST
 
 요청 (Request Body):
 {
-  "name": string,           // 필수
-  "isActive": boolean,      // 필수
-  "startDate": Date,        // 필수
-  "endDate": Date,          // 필수
-  "conditions": [           // 필수
+  "name": "신규 가입자 이벤트",
+  "isActive": true,
+  "startDate": "2024-03-20T00:00:00Z",
+  "endDate": "2024-04-20T23:59:59Z",
+  "conditions": [
     {
-      "type": string,       // LOGIN_COUNT, PURCHASE_AMOUNT, REFERRAL_COUNT
-      "count": number,      // LOGIN_COUNT일 때
-      "amount": number,     // PURCHASE_AMOUNT일 때
-      "referralCount": number // REFERRAL_COUNT일 때
+      "type": "LOGIN_COUNT",
+      "count": 5
+    },
+    {
+      "type": "PURCHASE_AMOUNT",
+      "amount": 50000
     }
   ],
-  "rewards": [              // 선택
+  "rewards": [
     {
-      "type": string,       // POINT, COUPON, ITEM
-      "quantity": number
+      "type": "POINT",
+      "quantity": 1000
+    },
+    {
+      "type": "COUPON",
+      "quantity": 1
     }
   ]
 }
@@ -213,15 +224,33 @@ Method: POST
 정상 응답 (200 OK):
 {
   "success": true,
-  "message": string,
+  "message": "이벤트가 생성되었습니다.",
   "event": {
-    "id": string,
-    "name": string,
-    "isActive": boolean,
-    "startDate": Date,
-    "endDate": Date,
-    "conditions": EventCondition[],
-    "rewards": Reward[]
+    "id": "682b79db38765ca2e9490750",
+    "name": "신규 가입자 이벤트",
+    "isActive": true,
+    "startDate": "2024-03-20T00:00:00Z",
+    "endDate": "2024-04-20T23:59:59Z",
+    "conditions": [
+      {
+        "type": "LOGIN_COUNT",
+        "count": 5
+      },
+      {
+        "type": "PURCHASE_AMOUNT",
+        "amount": 50000
+      }
+    ],
+    "rewards": [
+      {
+        "type": "POINT",
+        "quantity": 1000
+      },
+      {
+        "type": "COUPON",
+        "quantity": 1
+      }
+    ]
   }
 }
 ```
@@ -235,22 +264,40 @@ Method: GET
 
 요청 (Request Body):
 {
-  "isActive": boolean  // 선택
+  "isActive": true
 }
 
 정상 응답 (200 OK):
 {
   "success": true,
-  "message": string,
+  "message": "이벤트 목록이 조회되었습니다.",
   "events": [
     {
-      "id": string,
-      "name": string,
-      "isActive": boolean,
-      "startDate": Date,
-      "endDate": Date,
-      "conditions": EventCondition[],
-      "rewards": Reward[]
+      "id": "682b79db38765ca2e9490750",
+      "name": "신규 가입자 이벤트",
+      "isActive": true,
+      "startDate": "2024-03-20T00:00:00Z",
+      "endDate": "2024-04-20T23:59:59Z",
+      "conditions": [
+        {
+          "type": "LOGIN_COUNT",
+          "count": 5
+        },
+        {
+          "type": "PURCHASE_AMOUNT",
+          "amount": 50000
+        }
+      ],
+      "rewards": [
+        {
+          "type": "POINT",
+          "quantity": 1000
+        },
+        {
+          "type": "COUPON",
+          "quantity": 1
+        }
+      ]
     }
   ]
 }
@@ -264,20 +311,38 @@ Method: GET
 권한: ADMIN, OPERATOR, AUDITOR, USER
 
 요청 (Path Parameter):
-- eventId: string
+- eventId: 682b79db38765ca2e9490750
 
 정상 응답 (200 OK):
 {
   "success": true,
-  "message": string,
+  "message": "이벤트가 조회되었습니다.",
   "event": {
-    "id": string,
-    "name": string,
-    "isActive": boolean,
-    "startDate": Date,
-    "endDate": Date,
-    "conditions": EventCondition[],
-    "rewards": Reward[]
+    "id": "682b79db38765ca2e9490750",
+    "name": "신규 가입자 이벤트",
+    "isActive": true,
+    "startDate": "2024-03-20T00:00:00Z",
+    "endDate": "2024-04-20T23:59:59Z",
+    "conditions": [
+      {
+        "type": "LOGIN_COUNT",
+        "count": 5
+      },
+      {
+        "type": "PURCHASE_AMOUNT",
+        "amount": 50000
+      }
+    ],
+    "rewards": [
+      {
+        "type": "POINT",
+        "quantity": 1000
+      },
+      {
+        "type": "COUPON",
+        "quantity": 1
+      }
+    ]
   }
 }
 ```
@@ -290,21 +355,21 @@ Method: PUT
 권한: ADMIN, OPERATOR
 
 요청 (Path Parameter):
-- eventId: string
+- eventId: 682b79db38765ca2e9490750
 
 요청 (Request Body):
 {
-  "isActive": boolean  // 필수
+  "isActive": false
 }
 
 정상 응답 (200 OK):
 {
   "success": true,
-  "message": string,
+  "message": "이벤트 상태가 변경되었습니다.",
   "event": {
-    "id": string,
-    "name": string,
-    "isActive": boolean
+    "id": "682b79db38765ca2e9490750",
+    "name": "신규 가입자 이벤트",
+    "isActive": false
   }
 }
 ```
@@ -319,16 +384,20 @@ Method: GET
 권한: ADMIN, OPERATOR, AUDITOR, USER
 
 요청 (Path Parameter):
-- eventId: string
+- eventId: 682b79db38765ca2e9490750
 
 정상 응답 (200 OK):
 {
   "success": true,
-  "message": string,
+  "message": "보상 목록이 조회되었습니다.",
   "rewards": [
     {
-      "type": string,
-      "quantity": number
+      "type": "POINT",
+      "quantity": 1000
+    },
+    {
+      "type": "COUPON",
+      "quantity": 1
     }
   ]
 }
@@ -342,16 +411,16 @@ Method: GET
 권한: ADMIN, OPERATOR, AUDITOR, USER
 
 요청 (Path Parameter):
-- eventId: string
-- rewardId: string
+- eventId: 682b79db38765ca2e9490750
+- rewardId: 682b79db38765ca2e9490751
 
 정상 응답 (200 OK):
 {
   "success": true,
-  "message": string,
+  "message": "보상이 조회되었습니다.",
   "reward": {
-    "type": string,
-    "quantity": number
+    "type": "POINT",
+    "quantity": 1000
   }
 }
 ```
@@ -365,34 +434,52 @@ Method: GET
 
 요청 (Request Body):
 {
-  "userId": string  // 필수
+  "userId": "682b79db38765ca2e9490748"
 }
 
 정상 응답 (200 OK):
 {
   "success": true,
-  "message": string,
+  "message": "보상 요청 내역이 조회되었습니다.",
   "rewardRequests": [
     {
-      "userId": string,
+      "userId": "682b79db38765ca2e9490748",
       "participation": {
-        "id": string,
-        "status": string,
-        "requestedAt": Date,
-        "completedAt": Date
+        "id": "682b79db38765ca2e9490752",
+        "status": "COMPLETED",
+        "requestedAt": "2024-03-20T10:00:00Z",
+        "completedAt": "2024-03-20T10:05:00Z"
       },
       "event": {
-        "id": string,
-        "name": string,
-        "isActive": boolean,
-        "startDate": Date,
-        "endDate": Date,
-        "conditions": EventCondition[]
+        "id": "682b79db38765ca2e9490750",
+        "name": "신규 가입자 이벤트",
+        "isActive": true,
+        "startDate": "2024-03-20T00:00:00Z",
+        "endDate": "2024-04-20T23:59:59Z",
+        "conditions": [
+          {
+            "type": "LOGIN_COUNT",
+            "count": 5
+          },
+          {
+            "type": "PURCHASE_AMOUNT",
+            "amount": 50000
+          }
+        ]
       },
-      "rewards": Reward[]
+      "rewards": [
+        {
+          "type": "POINT",
+          "quantity": 1000
+        },
+        {
+          "type": "COUPON",
+          "quantity": 1
+        }
+      ]
     }
   ],
-  "total": number
+  "total": 1
 }
 ```
 
@@ -405,38 +492,56 @@ Method: GET
 
 요청 (Request Body):
 {
-  "eventId": string,    // 선택
-  "userId": string,     // 선택
-  "status": string,     // 선택
-  "startDate": string,  // 선택
-  "endDate": string     // 선택
+  "eventId": "682b79db38765ca2e9490750",
+  "userId": "682b79db38765ca2e9490748",
+  "status": "COMPLETED",
+  "startDate": "2024-03-20T00:00:00Z",
+  "endDate": "2024-03-21T00:00:00Z"
 }
 
 정상 응답 (200 OK):
 {
   "success": true,
-  "message": string,
+  "message": "보상 요청 내역이 조회되었습니다.",
   "rewardRequests": [
     {
-      "userId": string,
+      "userId": "682b79db38765ca2e9490748",
       "participation": {
-        "id": string,
-        "status": string,
-        "requestedAt": Date,
-        "completedAt": Date
+        "id": "682b79db38765ca2e9490752",
+        "status": "COMPLETED",
+        "requestedAt": "2024-03-20T10:00:00Z",
+        "completedAt": "2024-03-20T10:05:00Z"
       },
       "event": {
-        "id": string,
-        "name": string,
-        "isActive": boolean,
-        "startDate": Date,
-        "endDate": Date,
-        "conditions": EventCondition[]
+        "id": "682b79db38765ca2e9490750",
+        "name": "신규 가입자 이벤트",
+        "isActive": true,
+        "startDate": "2024-03-20T00:00:00Z",
+        "endDate": "2024-04-20T23:59:59Z",
+        "conditions": [
+          {
+            "type": "LOGIN_COUNT",
+            "count": 5
+          },
+          {
+            "type": "PURCHASE_AMOUNT",
+            "amount": 50000
+          }
+        ]
       },
-      "rewards": Reward[]
+      "rewards": [
+        {
+          "type": "POINT",
+          "quantity": 1000
+        },
+        {
+          "type": "COUPON",
+          "quantity": 1
+        }
+      ]
     }
   ],
-  "total": number
+  "total": 1
 }
 ```
 
