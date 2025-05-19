@@ -1,58 +1,39 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/nexon-backend-problem/src",
-  "compilerOptions": {
-    "deleteOutDir": true,
-    "webpack": true,
-    "tsConfigPath": "apps/nexon-backend-problem/tsconfig.app.json"
-  },
+  "sourceRoot": "apps/gateway/src",
   "monorepo": true,
-  "root": "apps/nexon-backend-problem",
+  "root": "apps/gateway",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/gateway/tsconfig.app.json"
+  },
   "projects": {
-    "api-gateway": {
+    "gateway": {
       "type": "application",
-      "root": "apps/api-gateway",
+      "root": "apps/gateway",
       "entryFile": "main",
-      "sourceRoot": "apps/api-gateway/src",
+      "sourceRoot": "apps/gateway/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+        "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
     },
-    "auth-service": {
+    "auth": {
       "type": "application",
-      "root": "apps/auth-service",
+      "root": "apps/auth",
       "entryFile": "main",
-      "sourceRoot": "apps/auth-service/src",
+      "sourceRoot": "apps/auth/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/auth-service/tsconfig.app.json"
+        "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     },
-    "event-service": {
+    "event": {
       "type": "application",
-      "root": "apps/event-service",
+      "root": "apps/event",
       "entryFile": "main",
-      "sourceRoot": "apps/event-service/src",
+      "sourceRoot": "apps/event/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/event-service/tsconfig.app.json"
-      }
-    },
-    "gateway-service": {
-      "type": "application",
-      "root": "apps/gateway-service",
-      "entryFile": "main",
-      "sourceRoot": "apps/gateway-service/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/gateway-service/tsconfig.app.json"
-      }
-    },
-    "nexon-backend-problem": {
-      "type": "application",
-      "root": "apps/nexon-backend-problem",
-      "entryFile": "main",
-      "sourceRoot": "apps/nexon-backend-problem/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/nexon-backend-problem/tsconfig.app.json"
+        "tsConfigPath": "apps/event/tsconfig.app.json"
       }
     }
   }

@@ -1,5 +1,5 @@
 {
-  "name": "nexon-backend-problem",
+  "name": "microservice-backend-problem",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -11,13 +11,13 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/apps/nexon-backend-problem/main",
+    "start:prod": "node dist/apps/microservice-backend-problem/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/nexon-backend-problem/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/microservice-backend-problem/test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -31,6 +31,7 @@
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
+    "cookie-parser": "^1.4.7",
     "mongoose": "^8.14.3",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",

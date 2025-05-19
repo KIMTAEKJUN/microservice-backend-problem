@@ -1,0 +1,64 @@
+services:
+  gateway-service:
+    container_name: gateway-service
+    build:
+      context: .
+      dockerfile: apps/gateway/dockerfile
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    depends_on:
+      - auth-service
+      - event-service
+    networks:
+      - microservice-network
+
+  auth-service:
+    container_name: auth-service
+    build:
+      context: .
+      dockerfile: apps/auth/dockerfile
+    ports:
+      - '3001:3001'
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+    networks:
+      - microservice-network
+
+  event-service:
+    container_name: event-service
+    build:
+      context: .
+      dockerfile: apps/event/dockerfile
+    ports:
+      - '3002:3002'
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+    networks:
+      - microservice-network
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=taekjun
+      - MONGO_INITDB_ROOT_PASSWORD=4126
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - microservice-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  microservice-network:
+    driver: bridge

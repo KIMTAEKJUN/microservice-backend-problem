@@ -1,0 +1,20 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY tsconfig*.json ./
+COPY apps/auth ./apps/auth
+COPY libs ./libs
+
+COPY . .
+COPY .env .env
+
+RUN npm install
+RUN npm run build auth
+
+RUN npm install -g pm2
+
+EXPOSE 3001
+
+CMD ["pm2-runtime", "start", "dist/apps/auth/main.js"]
