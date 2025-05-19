@@ -1,15 +1,6 @@
 # Microservice Event System
 
-## 기술 스택
-
-- TypeScript
-- Node.js 18
-- NestJS (최신)
-- MongoDB
-- Docker + docker-compose
-- PM2
-
-### 프로젝트 구조
+## 프로젝트 구조
 
 - Gateway Service (3000번 포트)
 - Auth Service (3001번 포트)
